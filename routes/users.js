@@ -121,10 +121,17 @@ passport.use(new LocalStrategy(
 		});
 	}
 ));
+
 router.post('/login', passport.authenticate('local', {failureRedirect: '/users/login', failureFlash:'Invalid username or password'}), function(req, res){
 	console.log('authenticate Successful');
 	req.flash('success', 'You are now logged in');
 	res.redirect('/');
+});
+
+router.get('/logout', function(req, res){
+	req.logout();
+	req.flash('success', 'You have logged out');
+	res.redirect('/users/login');
 });
 
 module.exports = router;
